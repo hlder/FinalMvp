@@ -58,7 +58,6 @@ public interface MainViewModel {
 }
 </pre>
 4.MainViewModelImpl实现ViewModel,并且需要在class上方加上注解@ViewModel,以表示是ViewModel层<br/>
-在开发中不需要主动去操作多线程，当代码运行到viewmodel的时候会自动进入子线程，而当调用view的时候会自动进入主线程。完全由框架自动操作！
 <pre>
 @ViewModel
 public class MainViewModelImpl implements MainViewModel{
@@ -130,6 +129,8 @@ public class MainModel {
     }
 }
 </pre>
+# 提醒
+代码看到这里有人就有疑问了，为什么请求http没有在子线程中执行，哈哈！告诉你们在viewmodel运行的时候就已经在子线程了。
 
 # 完结
 到这里就完成了，这样就层次很清晰了。并且不需要操作任何多线程的代码，但实际在viewmodel的时候就已经在子线程执行了！
