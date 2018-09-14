@@ -51,7 +51,8 @@ public interface MainViewModel {
     void loadWeather();
 }
 </pre>
-4.MainViewModelImpl实现ViewModel,并且需要在class上方加上注解@ViewModel,以表示是ViewModel层
+4.MainViewModelImpl实现ViewModel,并且需要在class上方加上注解@ViewModel,以表示是ViewModel层<br/>
+在开发中不需要主动去操作多线程，当代码运行到viewmodel的时候会自动进入子线程，而当调用view的时候会自动进入主线程。完全由框架自动操作！
 <pre>
 @ViewModel
 public class MainViewModelImpl implements MainViewModel{
@@ -86,15 +87,43 @@ public class MainModel {
      * 不需要多线程，直接同步执行就行了
      */
     public Weather loadWeatherFromUrl(){
-        //执行http请自行去处理
         String jsonStr=doHttp("http://www.weather.com.cn/data/cityinfo/101010100.html");
         JSONObject jo=JSON.parseObject(jsonStr);
         JSONObject weatherinfo=jo.getJSONObject("weatherinfo");
         Weather weather=weatherinfo.toJavaObject(Weather.class);
         return weather;
     }
+    /**
+     * 执行http请求
+     * 这里只是为演示使用，建议自己使用okhttp等框架
+     * 需要同步执行，不需要使用框架内的异步操作
+     */
+    public static String doHttp(String urlStr) {
+        try {
+            URL u = new URL(urlStr);
+            InputStream in = u.openStream();
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            try {
+                byte buf[] = new byte[1024];
+                int read;
+                while ((read = in.read(buf)) > 0) {
+                    out.write(buf, 0, read);
+                }
+            } finally {
+                if (in != null) {
+                    in.close();
+                }
+            }
+            byte b[] = out.toByteArray();
+            String result=new String(b, "utf-8");
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "aaaaa";
+    }
 }
 </pre>
 
 # 完结
-到这里就完成了，这样就层次很清晰了。并且适合多人开发。
+到这里就完成了，这样就层次很清晰了。并且不需要操作任何多线程的代码，但实际在viewmodel的时候就已经在子线程执行了！
