@@ -12,7 +12,7 @@ Model-View-ViewModel的简写，mvvm就是一种设计模式，不懂的自己�
 那就让我们来看看这个神秘的finalMvvm吧！
 
 # 上代码
-这里做一个查询天气的demo
+这里做一个查询天气的demo<br/>
 在使用前需要rxJava依赖
 <pre>
     implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
