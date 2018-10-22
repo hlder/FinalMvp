@@ -6,12 +6,13 @@ Model-View-ViewModel的简写，mvvm就是一种设计模式，不懂的自己�
 # FinalMvvm
 我们在Android开发中用的最多的无非就是多线程，为了避免手机卡顿，我们在做耗时操作时必须在子线程中执行，而执行完成后又需要在主线程中去做UI操作。
 这样就会需要写很多的代码，并且还要考虑子线程主线程的关系，逻辑复杂了之后就容易产生一些意想不到的bug让我们头疼。<br/>
-这里需要感谢rxjava，让多线程变得不用我们管，哈哈！没错，finalMvvm使用了rxjava进行多线程处理，并将rxjava和mvvm完美集合。
+这里需要感谢rxjava，让多线程变得不用我们管，哈哈！没错，finalMvvm使用了rxjava进行多线程处理，并将rxjava和mvvm完美结合。
 我们写代码的时候无需关心rxjava，只需要根据
 规则编辑代码，便可以编辑出简洁易读并且性能优异的优秀代码，哈哈- -<br/>
 那就让我们来看看这个神秘的finalMvvm吧！
 
 # 上代码
+这里做一个查询天气的demo<br/>
 在使用前需要rxJava依赖
 <pre>
     implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
@@ -58,7 +59,6 @@ public interface MainViewModel {
 }
 </pre>
 4.MainViewModelImpl实现ViewModel,并且需要在class上方加上注解@ViewModel,以表示是ViewModel层<br/>
-在开发中不需要主动去操作多线程，当代码运行到viewmodel的时候会自动进入子线程，而当调用view的时候会自动进入主线程。完全由框架自动操作！
 <pre>
 @ViewModel
 public class MainViewModelImpl implements MainViewModel{
@@ -130,6 +130,8 @@ public class MainModel {
     }
 }
 </pre>
+# 提醒
+代码看到这里有人就有疑问了，为什么请求http没有在子线程中执行，哈哈！告诉你们在viewmodel运行的时候就已经在子线程了。
 
 # 完结
 到这里就完成了，这样就层次很清晰了。并且不需要操作任何多线程的代码，但实际在viewmodel的时候就已经在子线程执行了！
