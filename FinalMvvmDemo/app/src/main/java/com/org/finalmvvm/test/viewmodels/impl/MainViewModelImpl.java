@@ -6,6 +6,7 @@ import com.org.finalmvvm.test.beans.Weather;
 import com.org.finalmvvm.test.models.MainModel;
 import com.org.finalmvvm.test.views.MainView;
 import com.org.finalmvvm.test.viewmodels.MainViewModel;
+import com.org.finalmvvm.test.views.TestView;
 
 @ViewModel
 public class MainViewModelImpl implements MainViewModel{
@@ -16,6 +17,9 @@ public class MainViewModelImpl implements MainViewModel{
 
     @Autowired
     MainModel mainModel;
+
+    @Autowired
+    TestView testView;
 
 
     @Override

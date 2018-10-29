@@ -99,7 +99,12 @@ public class FinalMvvm {
                         f.set(viewModel,proxyObj);
                     }else{
                         if(cls.isInterface()){//如果是接口则需要去寻找类
-                            cls=ViewModelContainer.findViewModel(context,cls);
+                            Class tempCls=ViewModelContainer.findViewModel(context,cls);
+                            if(tempCls!=null){
+                                cls=tempCls;
+                            }
+//                            cls=ViewModelContainer.findViewModel(context,cls);
+
                             //寻找完后重新获取注解
                             anViewModel= cls.getAnnotation(ViewModel.class);
                             anModel= cls.getAnnotation(Model.class);
