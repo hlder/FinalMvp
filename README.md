@@ -135,3 +135,26 @@ public class MainModel {
 
 # 完结
 到这里就完成了，这样就层次很清晰了。并且不需要操作任何多线程的代码，但实际在viewmodel的时候就已经在子线程执行了！
+
+
+
+
+
+# 使用方法:
+
+1.Add it in your root build.gradle at the end of repositories:
+<pre>
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
+</pre>
+2.Add the dependency
+<pre>
+dependencies {
+        implementation 'com.github.yuanfen7650:FinalMvvm:1.0'
+}
+</pre>
+
