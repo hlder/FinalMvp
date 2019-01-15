@@ -1,15 +1,15 @@
 
 使用各种架构的目的无非是让代码变的简洁，易读。并且在多人开发中可以展现出无限的魅力。不同的层可以让不同的人开发，互相独立并互相影响！<br/>
 框架就是将原本需要一大堆代码的统一起来,来简化代码的编辑。
-# mvvm
-Model-View-ViewModel的简写，mvvm就是一种设计模式，不懂的自己百度一下。在实际开发中也可以省去model变为vvm。
-# FinalMvvm
+# mvp
+Model-View-Presenter的简写，mvp就是一种设计模式，不懂的自己百度一下。
+# Finalmvp
 我们在Android开发中用的最多的无非就是多线程，为了避免手机卡顿，我们在做耗时操作时必须在子线程中执行，而执行完成后又需要在主线程中去做UI操作。
 这样就会需要写很多的代码，并且还要考虑子线程主线程的关系，逻辑复杂了之后就容易产生一些意想不到的bug让我们头疼。<br/>
-这里需要感谢rxjava，让多线程变得不用我们管，哈哈！没错，finalMvvm使用了rxjava进行多线程处理，并将rxjava和mvvm完美结合。
+这里需要感谢rxjava，让多线程变得不用我们管，哈哈！没错，finalmvp使用了rxjava进行多线程处理，并将rxjava和mvp完美结合。
 我们写代码的时候无需关心rxjava，只需要根据
 规则编辑代码，便可以编辑出简洁易读并且性能优异的优秀代码，哈哈- -<br/>
-那就让我们来看看这个神秘的finalMvvm吧！
+那就让我们来看看这个神秘的finalmvp吧！
 
 # 上代码
 这里做一个查询天气的demo<br/>
@@ -35,7 +35,7 @@ public interface MainView {
 @View
 public class MainActivity extends AppCompatActivity implements MainView{
     @Autowired
-    MainViewModel mainViewModel;
+    MainPresenter mainPresenter;
     
     private TextView textView;
     @Override
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView=findViewById(R.id.textView);
-        FinalMvvm.init(this);//初始化finalMvvm,框架自动扫描注解
+        Finalmvp.init(this);//初始化finalmvp,框架自动扫描注解
     }
     @Override
     public void showWeatherText(String text) {
@@ -52,16 +52,16 @@ public class MainActivity extends AppCompatActivity implements MainView{
 }
 </pre>
 
-3.ViewModel
+3.Presenter
 <pre>
-public interface MainViewModel {
+public interface MainPresenter {
     void loadWeather();
 }
 </pre>
-4.MainViewModelImpl实现ViewModel,并且需要在class上方加上注解@ViewModel,以表示是ViewModel层<br/>
+4.MainPresenterImpl实现Presenter,并且需要在class上方加上注解@Presenter,以表示是Presenter层<br/>
 <pre>
-@ViewModel
-public class MainViewModelImpl implements MainViewModel{
+@Presenter
+public class MainPresenterImpl implements MainPresenter{
     @Autowired
     MainView mainView;
 
@@ -131,10 +131,10 @@ public class MainModel {
 }
 </pre>
 # 提醒
-代码看到这里有人就有疑问了，为什么请求http没有在子线程中执行，哈哈！告诉你们在viewmodel运行的时候就已经在子线程了。
+代码看到这里有人就有疑问了，为什么请求http没有在子线程中执行，哈哈！告诉你们在Presenter运行的时候就已经在子线程了。
 
 # 完结
-到这里就完成了，这样就层次很清晰了。并且不需要操作任何多线程的代码，但实际在viewmodel的时候就已经在子线程执行了！
+到这里就完成了，这样就层次很清晰了。并且不需要操作任何多线程的代码，但实际在Presenter的时候就已经在子线程执行了！
 
 
 
@@ -154,7 +154,7 @@ allprojects {
 2.Add the dependency
 <pre>
 dependencies {
-        implementation 'com.github.yuanfen7650:FinalMvvm:1.2'
+        implementation 'com.github.yuanfen7650:Finalmvp:1.8'
 }
 </pre>
 
