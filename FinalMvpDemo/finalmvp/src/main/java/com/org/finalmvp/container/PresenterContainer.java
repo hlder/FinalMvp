@@ -75,13 +75,14 @@ public class PresenterContainer {
                 String clsName=""+iter.nextElement();
 //                Log.d("dddd","clsName："+clsName);
                 try {
-//                    Class cls=classLoader.loadClass(clsName);
-                    Class cls=Class.forName(clsName);
+                    Class cls=classLoader.loadClass(clsName);
+//                    Class cls=Class.forName(clsName);
                     Annotation vm= cls.getAnnotation(MvpPresenter.class);
                     Annotation model= cls.getAnnotation(MvpModel.class);
                     if(vm!=null||model!=null){
                         list.add(cls);
                     }
+
                 } catch (ClassNotFoundException e) {
                     Log.e("dddd","clsName："+clsName);
                     e.printStackTrace();
