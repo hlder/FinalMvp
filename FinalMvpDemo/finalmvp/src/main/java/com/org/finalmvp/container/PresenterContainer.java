@@ -84,6 +84,8 @@ public class PresenterContainer {
                     }
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
+                }catch (NoClassDefFoundError e){
+                    e.printStackTrace();
                 }
 //                if(clsName.contains(""+packageName)){//检测包名下的所有类，非包名的不管
 //
