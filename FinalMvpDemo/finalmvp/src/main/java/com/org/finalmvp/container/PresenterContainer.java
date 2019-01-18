@@ -73,7 +73,7 @@ public class PresenterContainer {
             DexFile df = new DexFile(file);
             for (Enumeration iter = df.entries(); iter.hasMoreElements(); ) {
                 String clsName=""+iter.nextElement();
-                Log.d("dddd","clsName："+clsName);
+//                Log.d("dddd","clsName："+clsName);
                 try {
                     Class cls=classLoader.loadClass(clsName);
 //                    Class cls=Class.forName(clsName);
