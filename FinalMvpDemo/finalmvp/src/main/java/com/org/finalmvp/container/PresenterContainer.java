@@ -47,6 +47,8 @@ public class PresenterContainer {
      * @param mContext
      */
     private static void searchPresenters(Context mContext) {
+
+        ClassLoader classLoader = mContext.getClassLoader();
         String packageCodePath = mContext.getPackageCodePath();
 
         File file=new File(packageCodePath);
@@ -59,31 +61,33 @@ public class PresenterContainer {
                 String name="aaaaaaaaaaaaaaaaaaa"+itemFile.getName();
                 String hz=name.substring(name.length()-4,name.length());
                 if(".apk".equals(hz)){
-                    loadOneFile(itemFile,mContext.getPackageName());
+                    loadOneFile(itemFile,classLoader);
                 }
             }
         }
     }
 
 
-    private static void loadOneFile(File file,String packageName){
+    private static void loadOneFile(File file,ClassLoader classLoader){
         try {
             DexFile df = new DexFile(file);
             for (Enumeration iter = df.entries(); iter.hasMoreElements(); ) {
                 String clsName=""+iter.nextElement();
                 Log.d("dddd","clsName："+clsName);
-                if(clsName.contains(""+packageName)){//检测包名下的所有类，非包名的不管
-                    try {
-                        Class cls=Class.forName(clsName);
-                        Annotation vm= cls.getAnnotation(MvpPresenter.class);
-                        Annotation model= cls.getAnnotation(MvpModel.class);
-                        if(vm!=null||model!=null){
-                            list.add(cls);
-                        }
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
+                try {
+                    Class cls=classLoader.loadClass(clsName);
+//                    Class cls=Class.forName(clsName);
+                    Annotation vm= cls.getAnnotation(MvpPresenter.class);
+                    Annotation model= cls.getAnnotation(MvpModel.class);
+                    if(vm!=null||model!=null){
+                        list.add(cls);
                     }
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
                 }
+//                if(clsName.contains(""+packageName)){//检测包名下的所有类，非包名的不管
+//
+//                }
             }
         } catch (IOException e) {
             e.printStackTrace();
