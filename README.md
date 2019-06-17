@@ -154,7 +154,7 @@ allprojects {
 2.Add the dependency
 <pre>
 dependencies {
-        implementation 'com.github.yuanfen7650:Finalmvp:1.8'
+        implementation 'com.github.yuanfen7650:Finalmvp:1.9.5'
 }
 </pre>
 
